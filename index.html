@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un rincón para mi Emisita ❤️</title>
+    <style>
+        /* ESTILOS GENERALES Y LAYOUT */
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf5f6;
+            color: #2d3436;
+        }
+
+        /* MENÚ LATERAL (IZQUIERDA) */
+        .sidebar {
+            width: 250px;
+            background-color: #ffdde1;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            color: #d63031;
+            font-size: 22px;
+            text-align: center;
+            border-bottom: 2px solid #ffb8b8;
+            padding-bottom: 10px;
+        }
+        .menu-lista {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .menu-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #d63031;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .menu-item.activo {
+            background: #d63031;
+            color: white;
+        }
+        .menu-item.bloqueado {
+            background: #f1f2f6;
+            color: #a4b0be;
+            cursor: not-allowed;
+        }
+
+        /* PANTALLA PRINCIPAL (DERECHA) */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* CONTENEDOR DEL SOBRE (ESTADO 1) */
+        .sobre-container {
+            text-align: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .sobre-container h1 {
+            color: #d63031;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        .icono-sobre {
+            font-size: 120px;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            /* Aquí está la animación de flotar */
+            animation: flotar 3s ease-in-out infinite;
+            transition: transform 0.2s;
+        }
+        .icono-sobre:hover {
+            transform: scale(1.1);
+            animation-play-state: paused;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* CONTENEDOR DE LA CARTA (ESTADO 2 - OCULTO INICIALMENTE) */
+        .carta-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            position: absolute;
+            
+            /* Empieza oculta y más pequeña para el efecto de "aparecer" */
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        /* Clase que se añade con JavaScript para mostrar la carta */
+        .carta-container.visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+        .carta-container h2 {
+            color: #d63031;
+            margin-top: 0;
+        }
+        .texto-mensaje {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #2d3436;
+            text-align: left;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+        <h2>Sorpresas para Emily</h2>
+        
+        <ul class="menu-lista">
+            <li class="menu-item activo">1. La primera carta 💌</li>
+            <li class="menu-item bloqueado">2. Próximamente 🔒</li>
+            <li class="menu-item bloqueado">3. Próximamente 🔒</li>
+        </ul>
+    </aside>
+
+    <!-- PANTALLA PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- ESTADO 1: EL SOBRE CERRADO -->
+        <div class="sobre-container" id="vista-sobre">
+            <h1>Hola mi amorcito, tengo algo para ti, de tu ing. en sistemas :) </h1>
+            
+            <div class="icono-sobre" onclick="abrirCarta()">💌</div>
+            <p style="color: #636e72; font-weight: bold;">(Haz clic en la carta)</p>
+        </div>
+
+        <!-- ESTADO 2: LA CARTA ABIERTA -->
+        <div class="carta-container" id="vista-carta">
+            <h2>¡Hola Emisita!</h2>
+            
+            <div class="texto-mensaje">
+                <!-- Tu mensaje ahora está estructurado en párrafos visibles -->
+                <p>¡Hola mi amor! Espero que estés teniendo un bonito día en el momento en el que leas esto.</p>
+                
+                <p>Solo quería hacerte saber de una manera un tanto distinta que te amo mucho, que aprecio mucho estar a tu lado en cada momento del día y hacerte recuerdo que tomes más agua y menos bebidas energéticas.</p>
+                
+                <p>Aquí es donde iré guardando detallitos y regalos con el tiempo. Para empezar, te regalo un vale por <b>ver la película que tú elijas la próxima vez</b>.</p>
+
+                <p>Por el resto no te preocupes. ¡TE AMO MUCHOOOO!</p>
+                
+                <p style="text-align: right; margin-top: 20px; font-weight: bold; color: #d63031;">
+                    Atte. Tu geko 🦎
+                </p>
+            </div>
+            
+            <button onclick="cerrarCarta()" style="margin-top: 15px; padding: 10px 20px; background: #ff7675; border: none; color: white; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                Guardar carta
+            </button>
+        </div>
+
+    </main>
+
+    <!-- SCRIPT PARA LAS ANIMACIONES (JAVASCRIPT) -->
+    <script>
+        const vistaSobre = document.getElementById('vista-sobre');
+        const vistaCarta = document.getElementById('vista-carta');
+
+        function abrirCarta() {
+            vistaSobre.style.opacity = '0';
+            vistaSobre.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                vistaSobre.style.display = 'none';
+                vistaCarta.classList.add('visible');
+            }, 500); 
+        }
+
+        function cerrarCarta() {
+            vistaCarta.classList.remove('visible');
+            
+            setTimeout(() => {
+                vistaSobre.style.display = 'block';
+                setTimeout(() => {
+                    vistaSobre.style.opacity = '1';
+                    vistaSobre.style.transform = 'scale(1)';
+                }, 50);
+            }, 600);
+        }
+    </script>
+</body>
+</html>
